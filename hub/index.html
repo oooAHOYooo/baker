@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baker Hub | Filmmaker Media Center</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="logo">BAKER <span>HUB</span></div>
+            <div id="clock">--:--</div>
+            <div class="status">
+                <span id="controller-status" class="disconnected">No Controller</span>
+            </div>
+        </header>
+
+        <main>
+            <section id="menu" class="grid">
+                <div class="card focusable" data-action="launch-game">
+                    <div class="icon">🎮</div>
+                    <h2>PLAY GAME</h2>
+                    <p>Launch current build</p>
+                </div>
+                <div class="card focusable" data-action="view-dailies">
+                    <div class="icon">🎬</div>
+                    <h2>DAILIES</h2>
+                    <p>Browse latest drafts</p>
+                </div>
+                <div class="card focusable" data-action="system">
+                    <div class="icon">⚙️</div>
+                    <h2>SYSTEM</h2>
+                    <p>Settings & Power</p>
+                </div>
+            </section>
+
+            <section id="dailies-view" class="hidden">
+                <button class="back-btn focusable">← Back</button>
+                <div id="video-grid" class="grid">
+                    <!-- Loaded dynamically -->
+                </div>
+            </section>
+        </main>
+
+        <div id="video-overlay" class="hidden">
+            <video id="player" controls autoplay></video>
+            <div class="video-info">
+                <h2 id="video-title">Filename.mp4</h2>
+                <p>Press B to Close</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

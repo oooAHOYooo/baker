@@ -1,0 +1,134 @@
+:root {
+    --bg-color: #0d0d0d;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --focus-bg: rgba(255, 255, 255, 0.15);
+    --accent-color: #f39c12; /* Cinematic Gold */
+    --text-color: #ffffff;
+    --text-secondary: #aaaaaa;
+    --glass-blur: blur(10px);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 40px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: var(--accent-color);
+    font-weight: 300;
+}
+
+#clock {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+}
+
+#controller-status.connected { color: #2ecc71; }
+#controller-status.disconnected { color: #e74c3c; }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    text-align: center;
+}
+
+.card .icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+.card p {
+    color: var(--text-secondary);
+}
+
+/* Controller Focus State */
+.card.focused, .back-btn.focused {
+    transform: scale(1.08);
+    background: var(--focus-bg);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 30px rgba(243, 156, 18, 0.3);
+}
+
+.hidden { display: none !important; }
+
+/* Video Overlay */
+#video-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: black;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+#player {
+    width: 100%;
+    height: 100%;
+}
+
+.video-info {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.back-btn {
+    background: none;
+    border: 2px solid white;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 30px;
+    margin-bottom: 30px;
+    width: fit-content;
+}
