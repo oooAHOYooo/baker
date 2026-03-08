@@ -346,12 +346,12 @@ def screen_daily_watcher(stdscr):
 
     while True:
         # Rescan each time we return to this menu
-        message_screen(stdscr, "Daily Watcher", ["Scanning for videos on USB drives..."], wait=False)
+        message_screen(stdscr, "Reel Scan", ["Scanning for videos on USB drives..."], wait=False)
         time.sleep(0.3)
         videos = find_usb_videos()
 
         if not videos:
-            message_screen(stdscr, "Daily Watcher", [
+            message_screen(stdscr, "Reel Scan", [
                 "No video files found.",
                 "",
                 "Make sure your USB drive is mounted under:",
@@ -373,7 +373,7 @@ def screen_daily_watcher(stdscr):
             display_names.append(f"{short}  [{size_mb:.1f} MB]")
 
         subtitle = f"{len(videos)} video(s) found | Player: {player or 'NOT FOUND'}"
-        idx = pick_menu(stdscr, "Daily Watcher — USB Videos", display_names, subtitle=subtitle)
+        idx = pick_menu(stdscr, "Reel Scan — USB Videos", display_names, subtitle=subtitle)
 
         if idx == -1:
             return
@@ -574,6 +574,41 @@ def screen_hdmi(stdscr):
                 run_shell_screen(stdscr, "config.txt", ["cat", config_file])
 
 
+def open_url(stdscr, title, url):
+    """Open a URL in Chromium (fullscreen kiosk) or xdg-open as fallback."""
+    curses.endwin()
+    print(f"\nOpening {title}: {url}\n")
+    if shutil.which("chromium-browser"):
+        subprocess.Popen(["chromium-browser", "--kiosk", url])
+    elif shutil.which("chromium"):
+        subprocess.Popen(["chromium", "--kiosk", url])
+    elif shutil.which("xdg-open"):
+        subprocess.Popen(["xdg-open", url])
+    else:
+        print("No browser found. Install chromium-browser:")
+        print("  sudo apt install chromium-browser")
+    print("Browser launched. Press Enter to return to menu...")
+    input()
+    stdscr.refresh()
+    setup_colors()
+
+
+def screen_film_hub(stdscr):
+    items = [
+        "AG Film Site  (ag-film.netlify.app)",
+        "Ahoy App      (app.ahoy.ooo)",
+    ]
+    while True:
+        idx = pick_menu(stdscr, "Film & Web Apps", items,
+                        subtitle="Opens in Chromium kiosk mode")
+        if idx == -1:
+            return
+        if idx == 0:
+            open_url(stdscr, "AG Film", "https://ag-film.netlify.app")
+        elif idx == 1:
+            open_url(stdscr, "Ahoy App", "https://app.ahoy.ooo")
+
+
 def screen_power_options(stdscr):
     items = [
         "Reboot Pi",
@@ -599,7 +634,8 @@ def screen_power_options(stdscr):
 
 MAIN_ITEMS = [
     ("[GAME]  Launch Game",          screen_launch_game),
-    ("[FILM]  Daily Watcher",        screen_daily_watcher),
+    ("[REEL]  Reel Scan",            screen_daily_watcher),
+    ("[FILM]  Film & Web Apps",      screen_film_hub),
     ("[WEB ]  Filmmaker Web Hub",    screen_web_hub),
     ("[CTRL]  Controller Setup",     screen_controllers),
     ("[SETUP] System Setup",         screen_setup),
