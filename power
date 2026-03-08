@@ -1,0 +1,36 @@
+#!/bin/bash
+# Baker Power Launcher — type 'power' from the baker directory to start everything.
+
+BAKER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$BAKER_DIR"
+
+echo ""
+echo "  ╔══════════════════════════════════════╗"
+echo "  ║         BAKER PI — STARTING UP        ║"
+echo "  ╚══════════════════════════════════════╝"
+echo ""
+
+# ── Optional: wake display / ensure HDMI is alive ──
+if command -v xrandr &>/dev/null; then
+    xrandr --auto 2>/dev/null || true
+fi
+
+# ── Ensure xpad is loaded (Xbox controllers) ──
+if lsmod | grep -q "^xpad" 2>/dev/null; then
+    echo "  [OK] xpad driver loaded"
+else
+    sudo modprobe xpad 2>/dev/null && echo "  [OK] xpad loaded" || echo "  [--] xpad not available"
+fi
+
+# ── Ensure Bluetooth is running ──
+if systemctl is-active --quiet bluetooth 2>/dev/null; then
+    echo "  [OK] Bluetooth active"
+else
+    sudo systemctl start bluetooth 2>/dev/null && echo "  [OK] Bluetooth started" || echo "  [--] Bluetooth unavailable"
+fi
+
+echo ""
+echo "  Starting Baker menu..."
+sleep 0.5
+
+exec python3 "$BAKER_DIR/power.py"
