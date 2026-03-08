@@ -1,12 +1,12 @@
 # Baker — Raspberry Pi 4 Game Setup
 
-This repository contains everything you need to set up a **Raspberry Pi 4** for a Unity-based game played on a TV, with support for **PS4 (Bluetooth)** and **Xbox Series X / 360 (USB)** controllers.
+This repository contains everything you need to set up a **Raspberry Pi 4** for a Unity-based game played on a TV, with support for **PS4 (Bluetooth)** and **Universal Xbox (USB)** controllers.
 
 ## 🛠 Features
 
 - **One-Shot Install**: Core dependencies (Bluetooth, joystick tools, Unity runtime libs) installed via `setup.sh`.
 - **PS4 Controller Support**: Dedicated pairing script to handle Bluetooth syncing.
-- **Xbox Series X / 360 Support**: Automated `xpad` driver loading and configuration.
+- **Universal Xbox Support**: Automated `xpad` driver loading for **Xbox 360, Xbox One, and Xbox Series X/S**.
 - **Controller Stability**: Custom udev rules to ensure controllers are recognized correctly.
 - **HDMI Optimization**: Recommended settings for TV display.
 
@@ -28,8 +28,8 @@ sudo ./setup.sh
 
 ### 3. Connect Controllers
 
-#### Xbox Series X / 360 (Wired)
-Just plug it into any USB port. It will be recognized automatically by the `xpad` driver.
+#### Xbox (Wired)
+Supports **Xbox 360, One, and Series X/S**. Just plug it into any USB port. It will be recognized automatically by the `xpad` driver.
 
 #### PS4 DualShock 4 (Bluetooth)
 Run the pairing helper:
@@ -62,7 +62,7 @@ dtparam=audio=on
 
 In your Unity project using the **New Input System**:
 - The PS4 controller will show up as `Gamepad` or `DualShock4GamepadHID`.
-- The Xbox Series X / 360 controller will show up as `XInputController` or `Gamepad`.
+- The Xbox controller (360, One, or Series X) will show up as `XInputController` or `Gamepad`.
 - Linux handles both simultaneously as `/dev/input/js0` and `/dev/input/js1`.
 
 ---

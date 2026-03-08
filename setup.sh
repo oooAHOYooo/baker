@@ -47,10 +47,14 @@ fi
 # 5. Setup udev rules for Gamepad Stability
 echo "[+] Applying udev rules for controllers..."
 cat <<EOF | sudo tee /etc/udev/rules.d/99-gamepad.rules
-# Xbox 360 Wired Controller
+# Xbox 360 / One / Series X (Universal wired support)
 SUBSYSTEM=="input", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="028e", MODE="0666", SYMLINK+="input/gamepad_xbox"
-# Xbox Series X Wired Controller
-SUBSYSTEM=="input", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="0b12", MODE="0666", SYMLINK+="input/gamepad_xbox_sx"
+SUBSYSTEM=="input", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02d1", MODE="0666", SYMLINK+="input/gamepad_xbox"
+SUBSYSTEM=="input", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02dd", MODE="0666", SYMLINK+="input/gamepad_xbox"
+SUBSYSTEM=="input", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02e3", MODE="0666", SYMLINK+="input/gamepad_xbox"
+SUBSYSTEM=="input", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02ea", MODE="0666", SYMLINK+="input/gamepad_xbox"
+SUBSYSTEM=="input", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="0b12", MODE="0666", SYMLINK+="input/gamepad_xbox"
+
 # PS4 DualShock 4 (Bluetooth)
 SUBSYSTEM=="input", ATTRS{name}=="Wireless Controller", MODE="0666", SYMLINK+="input/gamepad_ps4"
 EOF
