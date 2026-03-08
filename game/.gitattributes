@@ -1,0 +1,5 @@
+NinjaStrike filter=lfs diff=lfs merge=lfs -text
+NinjaStrike_Data/**/* filter=lfs diff=lfs merge=lfs -text
+*.so filter=lfs diff=lfs merge=lfs -text
+*.so.* filter=lfs diff=lfs merge=lfs -text
+*.bundle filter=lfs diff=lfs merge=lfs -text
