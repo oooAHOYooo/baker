@@ -37,18 +37,20 @@ fi
 sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
 
-# 4. Load xpad for Xbox 360 Controllers
-echo "[+] Ensuring xpad (Xbox 360) is loaded..."
+# 4. Load xpad for Xbox 360 / Series X Controllers
+echo "[+] Ensuring xpad (Xbox) is loaded..."
 sudo modprobe xpad
 if ! grep -q "xpad" /etc/modules; then
     echo "xpad" | sudo tee -a /etc/modules
 fi
 
-# 5. Setup udev rules for Gamepad Stability (Optional but helpful)
+# 5. Setup udev rules for Gamepad Stability
 echo "[+] Applying udev rules for controllers..."
 cat <<EOF | sudo tee /etc/udev/rules.d/99-gamepad.rules
 # Xbox 360 Wired Controller
 SUBSYSTEM=="input", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="028e", MODE="0666", SYMLINK+="input/gamepad_xbox"
+# Xbox Series X Wired Controller
+SUBSYSTEM=="input", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="0b12", MODE="0666", SYMLINK+="input/gamepad_xbox_sx"
 # PS4 DualShock 4 (Bluetooth)
 SUBSYSTEM=="input", ATTRS{name}=="Wireless Controller", MODE="0666", SYMLINK+="input/gamepad_ps4"
 EOF
